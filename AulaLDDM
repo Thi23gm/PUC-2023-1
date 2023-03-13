@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyWidget());
+}
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  TextEditingController _cPeso = TextEditingController();
+  TextEditingController _cAltura = TextEditingController();
+  String resp = "IMC: ";
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text("Calculadora de IMC"),
+            centerTitle: true,
+          ),
+          body: body()),
+    );
+  }
+
+  body() {
+    return Padding(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: [
+            TextField(decoration: InputDecoration(labelText: "Peso"),
+            keyboardType: TextInputType.number,
+            controller: _cPeso,),
+            TextField(decoration: InputDecoration(labelText: "Altura"),
+            keyboardType: TextInputType.number,
+            controller: _cAltura,),
+            ElevatedButton(
+              onPressed: calcular,
+              child: Text("Calcular")),
+            Text(resp)
+          ],
+        ));
+  }
+
+  calcular(){
+    double peso = double.parse(_cPeso.text);
+    double altura = double.parse(_cAltura.text)/100;
+    double IMC = peso/(altura*altura);
+    setState(() {
+      resp = "IMC: "+ IMC.toStringAsPrecision(4);  
+    });  
+    print ( resp);
+  }
+}
